@@ -28,9 +28,12 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Patient', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Update Patient',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
-      body: Center( 
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -74,7 +77,7 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                     _patient.phoneNumber = value!;
                   },
                 ),
-                  TextFormField(
+                TextFormField(
                   decoration: const InputDecoration(labelText: 'Email Address'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -111,7 +114,8 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Marital Status'),
+                  decoration:
+                      const InputDecoration(labelText: 'Marital Status'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your marital status!';
@@ -123,32 +127,32 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                   },
                 ),
                 const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text(
-                      'Gender',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(
+                    'Gender',
+                    style: TextStyle(fontSize: 16.0),
                   ),
-                  Row(
-                    children: genderOptions
-                        .map(
-                          (gender) => Row(
-                            children: [
-                              Radio(
-                                value: gender,
-                                groupValue: _patient.gender,
-                                onChanged: (String? value) {
-                                  setState(() {
-                                    _patient.gender = value!;
-                                  });
-                                },
-                              ),
-                              Text(gender),
-                            ],
-                          ),
-                        )
-                        .toList(),
-                  ),
+                ),
+                Row(
+                  children: genderOptions
+                      .map(
+                        (gender) => Row(
+                          children: [
+                            Radio(
+                              value: gender,
+                              groupValue: _patient.gender,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  _patient.gender = value!;
+                                });
+                              },
+                            ),
+                            Text(gender),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Center(
@@ -178,4 +182,3 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
     );
   }
 }
-

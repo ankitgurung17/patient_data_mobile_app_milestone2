@@ -54,7 +54,8 @@ class _PatientsDataState extends State<PatientsData> {
     },
   ];
 
-  void _navigateToDetailsScreen(BuildContext context, Map<String, dynamic> patient) {
+  void _navigateToDetailsScreen(
+      BuildContext context, Map<String, dynamic> patient) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -102,7 +103,10 @@ class _PatientsDataState extends State<PatientsData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('View Patients Data', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'View Patients Data',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: ListView.builder(
         itemCount: patientData.length,
@@ -111,7 +115,8 @@ class _PatientsDataState extends State<PatientsData> {
           return Card(
             margin: const EdgeInsets.all(8.0),
             child: ListTile(
-              title: Text('Name: ${patient['firstName']} ${patient['lastName']}'),
+              title:
+                  Text('Name: ${patient['firstName']} ${patient['lastName']}'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

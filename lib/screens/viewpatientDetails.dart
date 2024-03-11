@@ -5,11 +5,14 @@ class PatientDetails extends StatelessWidget {
 
   const PatientDetails({Key? key, required this.patient}) : super(key: key);
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient Details', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Patient Details',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_data_mobile_app_milestone2/screens/dashboard.dart';
+import 'package:patient_data_mobile_app_milestone2/screens/registerScreen.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -8,14 +9,17 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'gallery/login.png',
+              height: 100,
+              width: 100,
+            ),
+            const SizedBox(height: 20),
             const TextField(
               decoration: InputDecoration(
                 labelText: 'Email/Username',
@@ -47,7 +51,12 @@ class LoginScreen extends StatelessWidget {
                 const Text("Don't have an account? "),
                 TextButton(
                   onPressed: () {
-                    // Navigate to registration screen
+                    Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegisterScreen(),
+                  ),
+                    );
                   },
                   child: const Text('Register Here'),
                 ),

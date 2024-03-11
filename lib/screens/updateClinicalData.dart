@@ -24,7 +24,10 @@ class _NewPatientDataState extends State<UpdateClinicalData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Clinical Record', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Update Clinical Record',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

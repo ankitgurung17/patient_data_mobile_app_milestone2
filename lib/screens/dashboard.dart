@@ -6,7 +6,6 @@ import 'package:patient_data_mobile_app_milestone2/screens/updatepatientData.dar
 import 'package:patient_data_mobile_app_milestone2/screens/viewClinicalData.dart';
 import 'package:patient_data_mobile_app_milestone2/screens/viewPatientsData.dart';
 
-
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
@@ -15,9 +14,12 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
-          padding: EdgeInsets.only(bottom: 8.0), // Adjust the bottom padding as needed
-          child: Text('Dashboard',
-          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+          padding: EdgeInsets.only(
+              bottom: 8.0), // Adjust the bottom padding as needed
+          child: Text(
+            'Dashboard',
+            style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+          ),
         ),
       ),
       body: Center(
@@ -25,7 +27,7 @@ class DashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'gallery/patientInfo.png', 
+              'gallery/patientInfo.png',
               height: 100,
               width: 100,
             ),
@@ -43,7 +45,7 @@ class DashboardScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Image.asset(
-              'gallery/Clinicalpatient.png', 
+              'gallery/Clinicalpatient.png',
               width: 100,
               height: 100,
             ),
@@ -73,7 +75,10 @@ class PatientRecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient Data', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Patient Data',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: Center(
         child: Column(
@@ -121,8 +126,7 @@ class PatientRecordScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => PatientsData()),
+                  MaterialPageRoute(builder: (context) => PatientsData()),
                 );
               },
               child: const Text('View Patients'),
@@ -141,7 +145,10 @@ class ClinicalDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Clinical Data', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Clinical Data',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: Center(
         child: Column(
@@ -200,6 +207,3 @@ class ClinicalDataScreen extends StatelessWidget {
     );
   }
 }
-
-
-

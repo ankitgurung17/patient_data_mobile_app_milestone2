@@ -46,7 +46,10 @@ class _ClinicalDataState extends State<ClinicalData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient Clinical Data', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Patient Clinical Data',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: ListView.builder(
         itemCount: patientData.length,
@@ -81,7 +84,8 @@ class _ClinicalDataState extends State<ClinicalData> {
     );
   }
 
-  void _navigateToClinicalTests(BuildContext context, Map<String, dynamic> patient) {
+  void _navigateToClinicalTests(
+      BuildContext context, Map<String, dynamic> patient) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -90,7 +94,8 @@ class _ClinicalDataState extends State<ClinicalData> {
     );
   }
 
-  void _showDeleteConfirmationDialog(BuildContext context, Map<String, dynamic> patient) {
+  void _showDeleteConfirmationDialog(
+      BuildContext context, Map<String, dynamic> patient) {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -111,21 +116,22 @@ class _ClinicalDataState extends State<ClinicalData> {
               },
             ),
             TextButton(
-            child: const Text('Delete'),
-            onPressed: () {
-              setState(() {
-                int index = patientData.indexWhere((element) => element['id'] == patient['id']);
-                if (index != -1) {
-                  patientData.removeAt(index);
-                }
-              });
+              child: const Text('Delete'),
+              onPressed: () {
+                setState(() {
+                  int index = patientData
+                      .indexWhere((element) => element['id'] == patient['id']);
+                  if (index != -1) {
+                    patientData.removeAt(index);
+                  }
+                });
 
-              Navigator.of(context).pop(); 
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

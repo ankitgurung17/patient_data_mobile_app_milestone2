@@ -5,11 +5,14 @@ class ClinicalTests extends StatelessWidget {
 
   const ClinicalTests({Key? key, required this.patient}) : super(key: key);
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Clinical Tests', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
+        title: const Text(
+          'Clinical Tests',
+          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,7 +24,8 @@ class ClinicalTests extends StatelessWidget {
               _buildDetailRow('Test Date', patient['date']),
               _buildDetailRow('Blood Pressure', patient['blood_pressure']),
               _buildDetailRow('Respiratory Rate', patient['respiratory_rate']),
-              _buildDetailRow('Blood Oxygen Level', patient['blood_oxygen_level']),
+              _buildDetailRow(
+                  'Blood Oxygen Level', patient['blood_oxygen_level']),
               _buildDetailRow('Hearbeat Rate', patient['heartbeat_rate']),
             ],
           ),
