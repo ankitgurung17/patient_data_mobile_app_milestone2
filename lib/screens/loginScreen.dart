@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient_data_mobile_app_milestone2/screens/dashboard.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -35,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
+                    builder: (context) => DashboardScreen(),
                   ),
                 );
               },
