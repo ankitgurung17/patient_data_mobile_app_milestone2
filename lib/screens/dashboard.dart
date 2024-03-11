@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:patient_data_mobile_app_milestone2/screens/newClinicalData.dart';
 import 'package:patient_data_mobile_app_milestone2/screens/newPatientData.dart';
+import 'package:patient_data_mobile_app_milestone2/screens/updateClinicalData.dart';
 import 'package:patient_data_mobile_app_milestone2/screens/updatepatientData.dart';
+import 'package:patient_data_mobile_app_milestone2/screens/viewClinicalData.dart';
 import 'package:patient_data_mobile_app_milestone2/screens/viewPatientsData.dart';
 
 
@@ -38,8 +41,20 @@ class DashboardScreen extends StatelessWidget {
             Image.asset(
               'gallery/Clinicalpatient.png', 
               width: 100,
+              height: 100,
             ),
             const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ClinicalDataScreen(),
+                  ),
+                );
+              },
+              child: const Text('Patient Clinical Data'),
+            ),
           ],
         ),
       ),
@@ -99,6 +114,56 @@ class PatientRecordScreen extends StatelessWidget {
   }
 }
 
+class ClinicalDataScreen extends StatelessWidget {
+  const ClinicalDataScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add Clinical Data'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NewClinicalData()),
+                );
+              },
+              child: const Text('New Clinical Record'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UpdateClinicalData()),
+                );
+              },
+              child: const Text('Update Clinical Record'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ViewClinicalData()),
+                );
+              },
+              child: const Text('View Clinical Record'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 
