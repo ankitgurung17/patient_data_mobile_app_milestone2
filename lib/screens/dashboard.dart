@@ -18,7 +18,7 @@ class DashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'gallery/patientInfo.png', // Replace with your image asset
+              'gallery/patientInfo.png', 
               height: 100,
               width: 100,
             ),
@@ -36,22 +36,10 @@ class DashboardScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Image.asset(
-              'gallery/Clinicalpatient.png', // Replace with your image asset
-              height: 100,
+              'gallery/Clinicalpatient.png', 
               width: 100,
             ),
             const SizedBox(height: 20),
-            /*ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ClinicalDataScreen(),
-                  ),
-                );
-              },
-              child: const Text('Patient Clinical Info'),
-            ),*/
           ],
         ),
       ),
@@ -77,7 +65,7 @@ class PatientRecordScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const AddPatientRecord()),
+                      builder: (context) => const NewpatientData()),
                 );
               },
               child: const Text('Add Patient Record'),
@@ -88,9 +76,8 @@ class PatientRecordScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const UpdatePatientRecord()),
+                      builder: (context) => const UpdatePatientData()),
                 );
-                // Add functionality to update patient record
               },
               child: const Text('Update Patient Record'),
             ),
@@ -100,7 +87,7 @@ class PatientRecordScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PatientInfoTableScreen()),
+                      builder: (context) => PatientDataScreen()),
                 );
               },
               child: const Text('View Patient Record'),

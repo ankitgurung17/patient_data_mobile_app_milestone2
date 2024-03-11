@@ -31,8 +31,6 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Add login authentication logic here
-                // For now, just navigate to the home screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(

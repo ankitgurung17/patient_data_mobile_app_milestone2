@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PatientInfoTableScreen extends StatelessWidget {
-  // Replace this data with actual patient information
+class PatientDataScreen extends StatelessWidget {
   final List<Map<String, dynamic>> patientData = [
     {
       'id': 1,
@@ -43,7 +42,6 @@ class PatientInfoTableScreen extends StatelessWidget {
       'email_address': 'ritzghever@gmail.com',
       'address': '1110 finch avenue west'
     },
-    // Add more patient data as needed
   ];
 
   @override

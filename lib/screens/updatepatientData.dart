@@ -11,14 +11,14 @@ class Patient {
   String address = '';
 }
 
-class UpdatePatientRecord extends StatefulWidget {
-  const UpdatePatientRecord({Key? key}) : super(key: key);
+class UpdatePatientData extends StatefulWidget {
+  const UpdatePatientData({Key? key}) : super(key: key);
 
   @override
-  State<UpdatePatientRecord> createState() => _UpdatePatientRecordState();
+  State<UpdatePatientData> createState() => _UpdatePatientDataState();
 }
 
-class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
+class _UpdatePatientDataState extends State<UpdatePatientData> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
 
@@ -26,7 +26,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Updating Patient Data'),
+        title: const Text('Patient Data Update'),
       ),
       body: Center( // Center vertically
         child: Padding(
@@ -40,7 +40,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'Patient ID'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the patient id';
+                      return 'Please enter the patient id!';
                     }
                     return null;
                   },
@@ -52,7 +52,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'First Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the first name';
+                      return 'Please enter the first name!';
                     }
                     return null;
                   },
@@ -64,7 +64,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'Last Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the last name';
+                      return 'Please enter the last name!';
                     }
                     return null;
                   },
@@ -75,9 +75,8 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Date of Birth'),
                   validator: (value) {
-                    // You can add more sophisticated date validation if needed
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the date of birth';
+                      return 'Please enter the date of birth!';
                     }
                     return null;
                   },
@@ -89,7 +88,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'Gender'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the gender';
+                      return 'Please enter the gender!';
                     }
                     return null;
                   },
@@ -101,7 +100,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'Phone Number'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the phone number';
+                      return 'Please enter the phone number!';
                     }
                     return null;
                   },
@@ -113,7 +112,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'Email Address'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the email address';
+                      return 'Please enter the email address!';
                     }
                     return null;
                   },
@@ -125,7 +124,7 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                   decoration: const InputDecoration(labelText: 'Address'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the address';
+                      return 'Please enter the address!';
                     }
                     return null;
                   },
@@ -139,8 +138,6 @@ class _UpdatePatientRecordState extends State<UpdatePatientRecord> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        // You can add logic here to update the patient record
-                        // For now, let's print the patient information
                         print(_patient.patientID);
                         print(_patient.firstName);
                         print(_patient.lastName);
