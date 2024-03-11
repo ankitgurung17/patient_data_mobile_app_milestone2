@@ -20,3 +20,9 @@ flutter:
   assets:
     - gallery/Clinicalpatient.png
     - gallery/patientInfo.png
+    - gallery/patient.png
+    - gallery/ClinicalDataadd.png
+    - gallery/updateClinicalData.png
+    - gallery/updatePatient.png
+    - gallery/view.png
+    - gallery/ViewPatient.png

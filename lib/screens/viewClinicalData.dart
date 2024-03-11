@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:patient_data_mobile_app_milestone2/screens/viewClinicalTests.dart';
 
-class ViewClinicalData extends StatelessWidget {
+class ClinicalData extends StatefulWidget {
+  @override
+  _ClinicalDataState createState() => _ClinicalDataState();
+}
+
+class _ClinicalDataState extends State<ClinicalData> {
   final List<Map<String, dynamic>> patientData = [
     {
       'id': 1,
@@ -40,33 +46,86 @@ class ViewClinicalData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient Clinical Data'),
+        title: const Text('Patient Clinical Data', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: DataTable(
-          columns: const [
-            DataColumn(label: Text('ID')),
-            DataColumn(label: Text('Date')),
-            DataColumn(label: Text('Blood Pressure')),
-            DataColumn(label: Text('Respiratory Rate')),
-            DataColumn(label: Text('Blood Oxygen Level')),
-            DataColumn(label: Text('Heart Rate')),
-          ],
-          rows: patientData.map((patient) {
-            return DataRow(
-              cells: [
-                DataCell(Text(patient['id'].toString())),
-                DataCell(Text(patient['date'])),
-                DataCell(Text(patient['blood_pressure'])),
-                DataCell(Text(patient['respiratory_rate'])),
-                DataCell(Text(patient['blood_oxygen_level'])),
-                DataCell(Text(patient['heartbeat_rate'])),
-              ],
-            );
-          }).toList(),
-        ),
+      body: ListView.builder(
+        itemCount: patientData.length,
+        itemBuilder: (context, index) {
+          var patient = patientData[index];
+          return Card(
+            child: ListTile(
+              title: Text('${patient['id']}'),
+              subtitle: Text('Test Date: ${patient['date']}'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.visibility),
+                    onPressed: () {
+                      _navigateToClinicalTests(context, patient);
+                      print('View details for ID: ${patient['id']}');
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      _showDeleteConfirmationDialog(context, patient);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
+
+  void _navigateToClinicalTests(BuildContext context, Map<String, dynamic> patient) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ClinicalTests(patient: patient),
+      ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context, Map<String, dynamic> patient) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Delete'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure you want to delete this clinical data?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+            child: const Text('Delete'),
+            onPressed: () {
+              setState(() {
+                int index = patientData.indexWhere((element) => element['id'] == patient['id']);
+                if (index != -1) {
+                  patientData.removeAt(index);
+                }
+              });
+
+              Navigator.of(context).pop(); 
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 }

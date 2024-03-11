@@ -24,7 +24,7 @@ class _NewClinicalDataState extends State<NewClinicalData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Clinical Record'),
+        title: const Text('New Clinical Record', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -109,10 +109,12 @@ class _NewClinicalDataState extends State<NewClinicalData> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                  },
-                  child: const Text('Submit'),
+                child: Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                    },
+                    child: const Text('Add Test'),
+                  ),
                 ),
               ),
             ],

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Patient {
-  String patientID = '';
   String firstName = '';
   String lastName = '';
-  DateTime? dateOfBirth;
-  String gender = '';
   String phoneNumber = '';
   String emailAddress = '';
+  DateTime? dateOfBirth;
   String address = '';
+  String marital = '';
+  String gender = '';
 }
 
 class UpdatePatientData extends StatefulWidget {
@@ -22,13 +22,15 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
 
+  final List<String> genderOptions = ['Male', 'Female', 'Other'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient Data Update'),
+        title: const Text('Update Patient', style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),),
       ),
-      body: Center( // Center vertically
+      body: Center( 
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -36,18 +38,6 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Patient ID'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the patient id!';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _patient.patientID = value!;
-                  },
-                ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'First Name'),
                   validator: (value) {
@@ -73,30 +63,6 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Date of Birth'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the date of birth!';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _patient.dateOfBirth = DateTime.parse(value!);
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Gender'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the gender!';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _patient.gender = value!;
-                  },
-                ),
-                TextFormField(
                   decoration: const InputDecoration(labelText: 'Phone Number'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -108,7 +74,7 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                     _patient.phoneNumber = value!;
                   },
                 ),
-                TextFormField(
+                  TextFormField(
                   decoration: const InputDecoration(labelText: 'Email Address'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -118,6 +84,18 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                   },
                   onSaved: (value) {
                     _patient.emailAddress = value!;
+                  },
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'Date of Birth'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the date of birth!';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _patient.dateOfBirth = DateTime.parse(value!);
                   },
                 ),
                 TextFormField(
@@ -132,23 +110,64 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                     _patient.address = value!;
                   },
                 ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'Marital Status'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your marital status!';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _patient.marital = value!;
+                  },
+                ),
+                const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      'Gender',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ),
+                  Row(
+                    children: genderOptions
+                        .map(
+                          (gender) => Row(
+                            children: [
+                              Radio(
+                                value: gender,
+                                groupValue: _patient.gender,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _patient.gender = value!;
+                                  });
+                                },
+                              ),
+                              Text(gender),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        print(_patient.patientID);
-                        print(_patient.firstName);
-                        print(_patient.lastName);
-                        print(_patient.dateOfBirth);
-                        print(_patient.gender);
-                        print(_patient.phoneNumber);
-                        print(_patient.emailAddress);
-                        print(_patient.address);
-                      }
-                    },
-                    child: const Text('Update'),
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          print(_patient.firstName);
+                          print(_patient.lastName);
+                          print(_patient.phoneNumber);
+                          print(_patient.emailAddress);
+                          print(_patient.dateOfBirth);
+                          print(_patient.address);
+                          print(_patient.marital);
+                          print(_patient.gender);
+                        }
+                      },
+                      child: const Text('Update'),
+                    ),
                   ),
                 ),
               ],
