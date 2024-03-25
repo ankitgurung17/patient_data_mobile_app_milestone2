@@ -23,7 +23,22 @@ class _NewClinicalDataState extends State<NewClinicalData> {
   final Patient _patient = Patient();
 
   Future<void> _addClinicalData() async {
-    final String apiUrl = 'https://your-api-endpoint.com/add-clinical-data';
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    final Map<String, dynamic> clinicalData = {
+      'patientID': _patient.patientID,
+      'date': _patient.date,
+      'bloodPressure': _patient.bloodPressure,
+      'respiratoryRate': _patient.respiratoryRate,
+      'bloodOxygenLevel': _patient.bloodOxygenLevel,
+      'heartbeatRate': _patient.heartbeatRate,
+    };
+
+    final String apiUrl = 'https://customer-care-api-hf68.onrender.com/patients/tests';
 
     try {
       final response = await http.post(
@@ -31,54 +46,15 @@ class _NewClinicalDataState extends State<NewClinicalData> {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, dynamic>{
-          'patientID': _patient.patientID,
-          'date': _patient.date,
-          'bloodPressure': _patient.bloodPressure,
-          'respiratoryRate': _patient.respiratoryRate,
-          'bloodOxygenLevel': _patient.bloodOxygenLevel,
-          'heartbeatRate': _patient.heartbeatRate,
-        }),
+        body: jsonEncode(clinicalData),
       );
 
       if (response.statusCode == 200) {
-        // Clinical data added successfully, show success message
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Success'),
-              content: const Text('Clinical data added successfully.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+        // Clinical data added successfully
+        print('Clinical data added successfully');
       } else {
-        // Handle unsuccessful clinical data addition
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: const Text('Failed to add clinical data. Please try again.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+        // Handle unsuccessful response
+        print('Failed to add clinical data');
       }
     } catch (error) {
       print('Error: $error');
@@ -113,15 +89,76 @@ class _NewClinicalDataState extends State<NewClinicalData> {
                   _patient.patientID = value!;
                 },
               ),
-              // Other form fields...
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    _addClinicalData(); // Call the method to add clinical data
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Date'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the date!';
                   }
+                  return null;
                 },
-                child: const Text('Add Clinical Data'),
+                onSaved: (value) {
+                  _patient.date = value!;
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Blood Pressure'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter blood pressure of the patient!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _patient.bloodPressure = value!;
+                },
+              ),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Respiratory Rate'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter respiratory rate of the patient!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _patient.respiratoryRate = value!;
+                },
+              ),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Blood Oxygen Level'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter blood oxygen level of the patient!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _patient.bloodOxygenLevel = value!;
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Heartbeat Rate'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter heartbeat rate of the patient!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _patient.heartbeatRate = value!;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Center(
+                  child: ElevatedButton(
+                    onPressed: _addClinicalData,
+                    child: const Text('Add Test'),
+                  ),
+                ),
               ),
             ],
           ),
