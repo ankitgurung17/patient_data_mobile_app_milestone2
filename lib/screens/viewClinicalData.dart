@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:patient_data_mobile_app_milestone2/screens/viewClinicalTests.dart';
 
 class ClinicalData extends StatefulWidget {
@@ -7,40 +9,29 @@ class ClinicalData extends StatefulWidget {
 }
 
 class _ClinicalDataState extends State<ClinicalData> {
-  final List<Map<String, dynamic>> patientData = [
-    {
-      'id': 1,
-      'date': '3/10/2024',
-      'blood_pressure': '80/60',
-      'respiratory_rate': '95',
-      'blood_oxygen_level': '97%',
-      'heartbeat_rate': '87',
-    },
-    {
-      'id': 2,
-      'date': '3/3/2024',
-      'blood_pressure': '96/70',
-      'respiratory_rate': '85',
-      'blood_oxygen_level': '100%',
-      'heartbeat_rate': '75',
-    },
-    {
-      'id': 3,
-      'date': '2/10/2023',
-      'blood_pressure': '94/60',
-      'respiratory_rate': '79',
-      'blood_oxygen_level': '76%',
-      'heartbeat_rate': '78',
-    },
-    {
-      'id': 4,
-      'date': '1/1/2012',
-      'blood_pressure': '93/62',
-      'respiratory_rate': '88',
-      'blood_oxygen_level': '89%',
-      'heartbeat_rate': '77',
-    },
-  ];
+  List<Map<String, dynamic>> patientData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPatientData();
+  }
+
+  Future<void> fetchPatientData() async {
+    final apiUrl = 'https://customer-care-api-hf68.onrender.com/patients/id/tests'; 
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        setState(() {
+          patientData = json.decode(response.body);
+        });
+      } else {
+        print('Failed to fetch patient data');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,13 +110,8 @@ class _ClinicalDataState extends State<ClinicalData> {
               child: const Text('Delete'),
               onPressed: () {
                 setState(() {
-                  int index = patientData
-                      .indexWhere((element) => element['id'] == patient['id']);
-                  if (index != -1) {
-                    patientData.removeAt(index);
-                  }
+                  patientData.removeWhere((element) => element['id'] == patient['id']);
                 });
-
                 Navigator.of(context).pop();
               },
             ),
