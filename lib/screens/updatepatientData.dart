@@ -33,15 +33,16 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
           style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
+      body: SingleChildScrollView( 
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TextFormField(
                   decoration: const InputDecoration(labelText: 'First Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -153,28 +154,30 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                       )
                       .toList(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          print(_patient.firstName);
-                          print(_patient.lastName);
-                          print(_patient.phoneNumber);
-                          print(_patient.emailAddress);
-                          print(_patient.dateOfBirth);
-                          print(_patient.address);
-                          print(_patient.marital);
-                          print(_patient.gender);
-                        }
-                      },
-                      child: const Text('Update'),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            print(_patient.firstName);
+                            print(_patient.lastName);
+                            print(_patient.phoneNumber);
+                            print(_patient.emailAddress);
+                            print(_patient.dateOfBirth);
+                            print(_patient.address);
+                            print(_patient.marital);
+                            print(_patient.gender);
+                          }
+                        },
+                        child: const Text('Update'),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
