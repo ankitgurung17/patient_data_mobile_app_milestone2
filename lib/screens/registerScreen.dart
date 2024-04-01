@@ -17,7 +17,7 @@ class RegisterScreen extends StatelessWidget {
     final String confirmPassword = _confirmPasswordController.text;
 
     // Your API endpoint for user registration
-    final String apiUrl = 'https://your-api-endpoint.com/register';
+    final String apiUrl = 'http://10.0.2.2:3000/auth/register';
 
     try {
       final response = await http.post(
