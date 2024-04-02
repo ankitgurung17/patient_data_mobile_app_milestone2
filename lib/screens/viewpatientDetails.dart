@@ -1,38 +1,76 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class PatientDetails extends StatelessWidget {
-  final Map<String, dynamic> patient;
+class PatientDetailsWebService extends StatefulWidget {
+  final String patientId;
 
-  const PatientDetails({Key? key, required this.patient}) : super(key: key);
+  const PatientDetailsWebService({Key? key, required this.patientId}) : super(key: key);
+
+  @override
+  _PatientDetailsWebServiceState createState() => _PatientDetailsWebServiceState();
+}
+
+class _PatientDetailsWebServiceState extends State<PatientDetailsWebService> {
+  Map<String, dynamic>? patientData;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPatientDetails();
+  }
+
+  Future<void> fetchPatientDetails() async {
+    final apiUrl = 'http://your-server-url.com/patients/${widget.patientId}'; // Replace with your server URL
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        setState(() {
+          patientData = jsonDecode(response.body);
+          isLoading = false;
+        });
+      } else {
+        print('Failed to fetch patient details');
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (error) {
+      print('Error: $error');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Patient Details',
-          style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
-        ),
+        title: const Text('Patient Details'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildDetailRow('ID', patient['id']),
-              _buildDetailRow('First Name', patient['firstName']),
-              _buildDetailRow('Last Name', patient['lastName']),
-              _buildDetailRow('Phone Number', patient['phoneNumber']),
-              _buildDetailRow('Email Address', patient['emailAddress']),
-              _buildDetailRow('Date of Birth', patient['dateOfBirth']),
-              _buildDetailRow('Address', patient['address']),
-              _buildDetailRow('Marital Status', patient['marital']),
-              _buildDetailRow('Gender', patient['gender']),
-            ],
-          ),
-        ),
-      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : patientData != null
+              ? Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildDetailRow('ID', patientData!['id']),
+                      _buildDetailRow('First Name', patientData!['firstName']),
+                      _buildDetailRow('Last Name', patientData!['lastName']),
+                      _buildDetailRow('Phone Number', patientData!['phoneNumber']),
+                      _buildDetailRow('Email Address', patientData!['emailAddress']),
+                      _buildDetailRow('Date of Birth', patientData!['dateOfBirth']),
+                      _buildDetailRow('Address', patientData!['address']),
+                      _buildDetailRow('Marital Status', patientData!['marital']),
+                      _buildDetailRow('Gender', patientData!['gender']),
+                    ],
+                  ),
+                )
+              : Center(child: Text('Patient details not found')),
     );
   }
 
