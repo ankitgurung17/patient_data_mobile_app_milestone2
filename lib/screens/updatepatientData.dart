@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Patient {
+  String id = ''; 
   String firstName = '';
   String lastName = '';
   String phoneNumber = '';
   String emailAddress = '';
-  DateTime? dateOfBirth;
+  String dateOfBirth = '';
   String address = '';
   String marital = '';
   String gender = '';
@@ -21,8 +24,8 @@ class UpdatePatientData extends StatefulWidget {
 class _UpdatePatientDataState extends State<UpdatePatientData> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
-
   final List<String> genderOptions = ['Male', 'Female', 'Other'];
+  final String apiUrl = 'http://localhost:3000/patients';
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +36,27 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
           style: TextStyle(color: Color.fromARGB(255, 68, 156, 228)),
         ),
       ),
-      body: SingleChildScrollView( 
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextFormField(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'Patient ID'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the patient ID!';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _patient.id = value!;
+                  },
+                ),
+                TextFormField(
                   decoration: const InputDecoration(labelText: 'First Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -99,7 +113,7 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                     return null;
                   },
                   onSaved: (value) {
-                    _patient.dateOfBirth = DateTime.parse(value!);
+                    _patient.dateOfBirth = value!;
                   },
                 ),
                 TextFormField(
@@ -115,8 +129,7 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                   },
                 ),
                 TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: 'Marital Status'),
+                  decoration: const InputDecoration(labelText: 'Marital Status'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your marital status!';
@@ -155,33 +168,51 @@ class _UpdatePatientDataState extends State<UpdatePatientData> {
                       .toList(),
                 ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            print(_patient.firstName);
-                            print(_patient.lastName);
-                            print(_patient.phoneNumber);
-                            print(_patient.emailAddress);
-                            print(_patient.dateOfBirth);
-                            print(_patient.address);
-                            print(_patient.marital);
-                            print(_patient.gender);
-                          }
-                        },
-                        child: const Text('Update'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      _updatePatient();
+                    }
+                  },
+                  child: const Text('Update'),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _updatePatient() async {
+    try {
+      final response = await http.put(
+        Uri.parse('$apiUrl/${_patient.id}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'firstName': _patient.firstName,
+          'lastName': _patient.lastName,
+          'phoneNumber': _patient.phoneNumber,
+          'emailAddress': _patient.emailAddress,
+          'dateOfBirth': _patient.dateOfBirth,
+          'address': _patient.address,
+          'marital': _patient.marital,
+          'gender': _patient.gender,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        print('Patient updated successfully');
+      } else {
+        throw Exception('Failed to update patient: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
   }
 }

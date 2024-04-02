@@ -38,8 +38,8 @@ class _NewPatientDataState extends State<UpdateClinicalData> {
       'heartbeatRate': _patient.heartbeatRate,
     };
 
-    final String apiUrl =
-        'https://customer-care-api-hf68.onrender.com/patients/${_patient.patientID}/tests';
+    const String apiUrl = 'http://localhost:3000/patients/6602216b19457ef51270c029/tests';
+
 
     try {
       final response = await http.put(

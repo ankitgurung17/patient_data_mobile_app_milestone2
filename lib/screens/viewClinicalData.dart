@@ -18,12 +18,12 @@ class _ClinicalDataState extends State<ClinicalData> {
   }
 
   Future<void> fetchPatientData() async {
-    final apiUrl = 'https://customer-care-api-hf68.onrender.com/patients/id/tests'; 
+    final apiUrl = 'http://localhost:3000/patients/6602216b19457ef51270c029/tests';
     try {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         setState(() {
-          patientData = json.decode(response.body);
+          patientData = List<Map<String, dynamic>>.from(json.decode(response.body));
         });
       } else {
         print('Failed to fetch patient data');
@@ -48,7 +48,7 @@ class _ClinicalDataState extends State<ClinicalData> {
           var patient = patientData[index];
           return Card(
             child: ListTile(
-              title: Text('${patient['id']}'),
+              title: Text('6602216b19457ef51270c029'), // Fixed ID
               subtitle: Text('Test Date: ${patient['date']}'),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -57,7 +57,7 @@ class _ClinicalDataState extends State<ClinicalData> {
                     icon: Icon(Icons.visibility),
                     onPressed: () {
                       _navigateToClinicalTests(context, patient);
-                      print('View details for ID: ${patient['id']}');
+                      print('View details for ID: 6602216b19457ef51270c029'); // Fixed ID
                     },
                   ),
                   IconButton(
@@ -109,9 +109,7 @@ class _ClinicalDataState extends State<ClinicalData> {
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
-                setState(() {
-                  patientData.removeWhere((element) => element['id'] == patient['id']);
-                });
+                deleteClinicalData('6602216b19457ef51270c029'); // Fixed ID
                 Navigator.of(context).pop();
               },
             ),
@@ -119,5 +117,23 @@ class _ClinicalDataState extends State<ClinicalData> {
         );
       },
     );
+  }
+
+  Future<void> deleteClinicalData(String id) async {
+    final apiUrl = 'http://localhost:3000/patients/6602216b19457ef51270c029/tests';
+    try {
+      final response = await http.delete(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        // Deletion successful
+        setState(() {
+          // Remove the deleted entry from the local list
+          patientData.removeWhere((element) => element['id'] == id);
+        });
+      } else {
+        print('Failed to delete clinical data');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 }

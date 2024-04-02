@@ -27,8 +27,8 @@ class _NewpatientDataState extends State<NewpatientData> {
 
   final List<String> genderOptions = ['Male', 'Female', 'Other'];
 
-  //final String apiUrl = 'http://localhost:3000/patients';
-  final String apiUrl = 'http://127.0.0.1:3000/patients';
+  final String apiUrl = 'http://localhost:3000/patients';
+  //final String apiUrl = 'http://127.0.0.1:3000/patients';
 
   @override
   Widget build(BuildContext context) {
