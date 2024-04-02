@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:patient_data_mobile_app_milestone2/screens/dashboard.dart';
 
 class Patient {
   String patientID = '';
@@ -22,44 +23,7 @@ class _NewClinicalDataState extends State<NewClinicalData> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
 
-  Future<void> _addClinicalData() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    _formKey.currentState!.save();
-
-    final Map<String, dynamic> clinicalData = {
-      'patientID': _patient.patientID,
-      'date': _patient.date,
-      'bloodPressure': _patient.bloodPressure,
-      'respiratoryRate': _patient.respiratoryRate,
-      'bloodOxygenLevel': _patient.bloodOxygenLevel,
-      'heartbeatRate': _patient.heartbeatRate,
-    };
-
-    final String apiUrl = 'http://localhost:3000/patients/';
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(clinicalData),
-      );
-
-      if (response.statusCode == 200) {
-        // Clinical data added successfully
-        print('Clinical data added successfully');
-      } else {
-        // Handle unsuccessful response
-        print('Failed to add clinical data');
-      }
-    } catch (error) {
-      print('Error: $error');
-    }
-  }
+    final String apiUrl = 'http://localhost:3000/patients/6602216b19457ef51270c029/tests';
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +119,16 @@ class _NewClinicalDataState extends State<NewClinicalData> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Center(
                   child: ElevatedButton(
-                    onPressed: _addClinicalData,
-                    child: const Text('Add Test'),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()){
+                        _formKey.currentState!.save();
+                        _addClinicalData();
+                        Navigator.push(context, 
+                        MaterialPageRoute(builder: (context) => const DashboardScreen(),),
+                        );
+                      }
+                    },
+                    child: const Text('Submit'),
                   ),
                 ),
               ),
@@ -165,5 +137,42 @@ class _NewClinicalDataState extends State<NewClinicalData> {
         ),
       ),
     );
+  }
+
+Future<void> _addClinicalData() async {
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        // headers: {
+        //   "Access-Control-Allow-Origin": "*",
+        //   'Content-Type': 'application/json',
+        //   'Accept': '*/*'
+        // },
+        body: jsonEncode(<String, dynamic>{
+          'patientID': _patient.patientID,
+          'date': _patient.date,
+          'bloodPressure': _patient.bloodPressure,
+          'respiratoryRate': _patient.respiratoryRate,
+          'bloodOxygenlevel': _patient.bloodOxygenLevel,
+          'heartbeatRate': _patient.heartbeatRate,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Successful POST request, handle the response here
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        print(_patient.patientID);
+      } else {
+        // If the server returns an error response, throw an exception
+        throw Exception('Failed to post data');
+      }
+    } catch (e) {
+      print("excepion");
+      print(e);
+    }
   }
 }
