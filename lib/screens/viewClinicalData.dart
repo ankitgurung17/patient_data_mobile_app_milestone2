@@ -63,7 +63,7 @@ class _ClinicalDataState extends State<ClinicalData> {
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      _showDeleteConfirmationDialog(context, patient);
+                      _showDeleteConfirmationDialog(patient['_id']);
                     },
                   ),
                 ],
@@ -85,8 +85,7 @@ class _ClinicalDataState extends State<ClinicalData> {
     );
   }
 
-  void _showDeleteConfirmationDialog(
-      BuildContext context, Map<String, dynamic> patient) {
+  void _showDeleteConfirmationDialog(String patientId) async {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -109,7 +108,7 @@ class _ClinicalDataState extends State<ClinicalData> {
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
-                deleteClinicalData('6602216b19457ef51270c029'); // Fixed ID
+                deleteClinicalData('_id'); // Fixed ID
                 Navigator.of(context).pop();
               },
             ),
@@ -120,14 +119,14 @@ class _ClinicalDataState extends State<ClinicalData> {
   }
 
   Future<void> deleteClinicalData(String id) async {
-    final apiUrl = 'http://localhost:3000/patients/6602216b19457ef51270c029/tests';
+    final apiUrl = 'http://localhost:3000/patients/6602216b19457ef51270c029/tests/$id';
     try {
       final response = await http.delete(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         // Deletion successful
         setState(() {
           // Remove the deleted entry from the local list
-          patientData.removeWhere((element) => element['id'] == id);
+          patientData.removeWhere((element) => element['_id'] == id);
         });
       } else {
         print('Failed to delete clinical data');

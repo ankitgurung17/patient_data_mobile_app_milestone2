@@ -20,13 +20,14 @@ class ClinicalTests extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildDetailRow('ID', patient['id']),
+              _buildDetailRow('ID', patient['_id']),
+              _buildDetailRow('Patient ID', '6602216b19457ef51270c029'),
               _buildDetailRow('Test Date', patient['date']),
-              _buildDetailRow('Blood Pressure', patient['blood_pressure']),
-              _buildDetailRow('Respiratory Rate', patient['respiratory_rate']),
+              _buildDetailRow('Blood Pressure', patient['bloodPressure']),
+              _buildDetailRow('Respiratory Rate', patient['respiratoryRate']),
               _buildDetailRow(
-                  'Blood Oxygen Level', patient['blood_oxygen_level']),
-              _buildDetailRow('Hearbeat Rate', patient['heartbeat_rate']),
+                  'Blood Oxygen Level', patient['bloodOxygenlevel']),
+              _buildDetailRow('Hearbeat Rate', patient['heartbeatRate']),
             ],
           ),
         ),
