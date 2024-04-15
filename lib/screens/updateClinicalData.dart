@@ -30,7 +30,7 @@ class _NewPatientDataState extends State<UpdateClinicalData> {
     _formKey.currentState!.save();
 
     final Map<String, dynamic> clinicalData = {
-      'patientID': _patient.patientID,
+      'id': _patient.patientID,
       'date': _patient.date,
       'bloodPressure': _patient.bloodPressure,
       'respiratoryRate': _patient.respiratoryRate,

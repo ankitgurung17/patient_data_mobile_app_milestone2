@@ -75,7 +75,7 @@ class _PatientsDataState extends State<PatientsData> {
       if (response.statusCode == 200) {
         setState(() {
           // Remove the deleted patient from the list
-          patientData.removeWhere((patient) => patient['id'] == patientId);
+          patientData.removeWhere((patient) => patient['_id'] == patientId);
         });
       } else {
         print('Failed to delete patient data');
@@ -121,7 +121,7 @@ class _PatientsDataState extends State<PatientsData> {
                   IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      _showDeleteConfirmationDialog(patient['id']);
+                      _showDeleteConfirmationDialog(patient['_id']);
                     },
                   ),
                 ],
@@ -154,7 +154,7 @@ class PatientDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildDetailRow('ID', patient['id']),
+              _buildDetailRow('ID', patient['_id']),
               _buildDetailRow('First Name', patient['firstName']),
               _buildDetailRow('Last Name', patient['lastName']),
               _buildDetailRow('Phone Number', patient['phoneNumber']),
